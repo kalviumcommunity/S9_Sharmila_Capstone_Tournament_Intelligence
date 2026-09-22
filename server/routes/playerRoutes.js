@@ -50,4 +50,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    if (req.body.team) {
+      const teamExists = await Team.exists({ _id: req.body.team });
+
+      if (!teamExists) {
+        return res.status(404).json({ message: "Team not found" });
+      }
+    }
+
+    const player = await Player.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    }).populate("team", "name coach");
+
+    if (!player) {
+      return res.status(404).json({ message: "Player not found" });
+    }
+
+    res.json(player);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
