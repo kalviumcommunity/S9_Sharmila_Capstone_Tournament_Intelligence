@@ -1,5 +1,6 @@
 const express = require("express");
 const Team = require("../models/Team");
+const Tournament = require("../models/Tournament");
 
 const router = express.Router();
 
@@ -17,6 +18,14 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    const tournamentExists = await Tournament.exists({
+      _id: req.body.tournament,
+    });
+
+    if (!tournamentExists) {
+      return res.status(404).json({ message: "Tournament not found" });
+    }
+
     const team = await Team.create(req.body);
     const populatedTeam = await team.populate("tournament", "name status");
 
