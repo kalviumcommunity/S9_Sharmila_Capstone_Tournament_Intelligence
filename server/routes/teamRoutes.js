@@ -52,4 +52,31 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    if (req.body.tournament) {
+      const tournamentExists = await Tournament.exists({
+        _id: req.body.tournament,
+      });
+
+      if (!tournamentExists) {
+        return res.status(404).json({ message: "Tournament not found" });
+      }
+    }
+
+    const team = await Team.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    }).populate("tournament", "name status");
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    res.json(team);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
