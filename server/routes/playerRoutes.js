@@ -15,6 +15,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const player = await Player.findById(req.params.id).populate(
+      "team",
+      "name coach"
+    );
+
+    if (!player) {
+      return res.status(404).json({ message: "Player not found" });
+    }
+
+    res.json(player);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const player = await Player.create(req.body);
