@@ -18,6 +18,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const match = await Match.findById(req.params.id)
+      .populate("tournament", "name status")
+      .populate("team1", "name")
+      .populate("team2", "name")
+      .populate("winner", "name");
+
+    if (!match) {
+      return res.status(404).json({ message: "Match not found" });
+    }
+
+    res.json(match);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const match = await Match.create(req.body);
