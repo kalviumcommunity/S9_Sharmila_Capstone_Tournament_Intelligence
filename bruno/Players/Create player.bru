@@ -1,0 +1,20 @@
+meta {
+  name: Create player
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/players
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Jordan Lee",
+    "team": "{{teamId}}",
+    "age": 21,
+    "role": "Forward"
+  }
+}

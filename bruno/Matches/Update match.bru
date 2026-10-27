@@ -1,0 +1,23 @@
+meta {
+  name: Update match
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/matches/{{matchId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "tournament": "{{tournamentId}}",
+    "team1": "{{teamId}}",
+    "team2": "{{secondTeamId}}",
+    "matchDate": "2026-11-16T14:00:00.000Z",
+    "team1Score": 2,
+    "team2Score": 1,
+    "winner": "{{teamId}}"
+  }
+}
