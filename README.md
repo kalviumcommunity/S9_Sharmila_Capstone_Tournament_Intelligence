@@ -55,3 +55,18 @@ Google ID token before creating an HTTP-only session cookie.
 
 The session cookie is HTTP-only, uses `SameSite=Lax`, and is marked secure in
 production. Use HTTPS and configure the production origins before deployment.
+
+## Bruno API collection
+
+The `bruno/` folder contains a Bruno collection for every implemented API
+endpoint, including service health checks, tournament/team/player/match CRUD,
+and Google authentication. Open `bruno/` in Bruno and select the `Local`
+environment. Start the server with its environment configured and MongoDB
+available before sending requests.
+
+Set `googleCredential` to a valid Google ID token to test sign-in. Replace the
+entity ID placeholders with existing MongoDB ObjectIds before sending requests
+that address a specific record or reference related records. Bruno retains the
+session cookie from sign-in for the `/api/auth/me` request; logout clears it.
+
+There are no DELETE endpoints in the current API.

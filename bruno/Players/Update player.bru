@@ -1,0 +1,20 @@
+meta {
+  name: Update player
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/players/{{playerId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Jordan Lee",
+    "team": "{{teamId}}",
+    "age": 22,
+    "role": "Forward"
+  }
+}

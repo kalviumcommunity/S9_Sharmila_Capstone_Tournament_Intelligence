@@ -1,0 +1,21 @@
+meta {
+  name: Update tournament
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/tournaments/{{tournamentId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "City Cup 2026",
+    "location": "Chennai",
+    "startDate": "2026-11-15T09:00:00.000Z",
+    "endDate": "2026-11-20T18:00:00.000Z",
+    "status": "ongoing"
+  }
+}
